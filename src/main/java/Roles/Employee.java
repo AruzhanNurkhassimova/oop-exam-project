@@ -12,11 +12,12 @@ public abstract class Employee extends User {
 	 
 	 private List<Message> messages = new ArrayList<>();
 	 
-	 public Employee(int id, String login, String password, String fullName, Language language, double salary, String department, Date hireDate) {
+	 public Employee(int id, String login, String password, String fullName,
+					 Language language, double salary, String department) {
 		 super(id, login, password, fullName, language);
 		 this.salary = salary;
 		 this.department = department;
-		 this.hireDate = hireDate;
+		 this.hireDate = new Date();
 	 }
 	 
 	 public double getSalary() { return salary; }
@@ -39,6 +40,12 @@ public abstract class Employee extends User {
 		 receiver.messages.add(message);
 		 return message;
 	 }
+
+	public OfficialMessage sendOfficialMessage(Employee receiver, String subject, String text) {
+		OfficialMessage message = new OfficialMessage(this, receiver, subject, text);
+		receiver.viewMessages().add(message);
+		return message;
+	}
 
 	 public List<Message> viewMessages() { return messages; }
 

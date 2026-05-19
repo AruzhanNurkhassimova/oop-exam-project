@@ -1,5 +1,5 @@
 package ResearcherBlock;
-
+import Enums.CitationFormat;
 import java.io.Serializable;
 import java.util.*;
 
@@ -31,8 +31,28 @@ public class ResearchPaper implements Serializable, Comparable<ResearchPaper> {
     public String getDoi() { return doi; }
     public int getCitations() { return citations; }
 
+    private int getPublicationYear() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(publicationDate);
+        return calendar.get(Calendar.YEAR);
+    }
+
+    public String getCitation(CitationFormat format) {
+        if (format == CitationFormat.BIBTEX) {
+            return "@article{" + doi +
+                    ", title={" + title + "}" +
+                    ", journal={" + journalName + "}" +
+                    ", year={" + getPublicationYear() + "}" +
+                    "}";
+        }
+
+        return title + ", " + journalName + ", DOI: " + doi;
+    }
+
     public void addAuthor(Researcher author) {
-        authors.add(author);
+        if (author != null && !authors.contains(author)) {
+            authors.add(author);
+        }
     }
 
     public void removeAuthor(Researcher author) {
@@ -45,6 +65,11 @@ public class ResearchPaper implements Serializable, Comparable<ResearchPaper> {
 
     public void setCitations(int citations) {
         this.citations = citations;
+    }
+
+    @Override
+    public String toString() {
+        return title + " (" + journalName + ", citations=" + citations + ", pages=" + pages + ")";
     }
 
     @Override

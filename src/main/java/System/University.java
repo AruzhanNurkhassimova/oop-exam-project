@@ -8,9 +8,7 @@ import ResearcherBlock.*;
 import Enums.*;
  
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
  
 public class University implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -133,6 +131,19 @@ public class University implements Serializable {
         News item = new News("Top Cited Researcher", content, NewsTopic.RESEARCH);
         addNews(item);
         return item;
+    }
+
+    public Researcher getTopCitedResearcherOfYear(int year) {
+        return getAllResearchers().stream()
+                .max(Comparator.comparingInt(r -> r.getResearchPapers().stream()
+                        .filter(paper -> {
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(paper.getPublicationDate());
+                            return calendar.get(Calendar.YEAR) == year;
+                        })
+                        .mapToInt(ResearchPaper::getCitations)
+                        .sum()))
+                .orElse(null);
     }
  
     public News announcePaper(ResearchPaper paper) {

@@ -1,5 +1,7 @@
 package Roles;
 import java.util.*;
+
+import Exceptions.TooManyFailsException;
 import ResearcherBlock.*;
 import academicBlock.*;
 
@@ -73,6 +75,11 @@ public class Teacher extends Employee implements Researcher {
 		 if (!course.getStudents().contains(student)) {
 			 throw new IllegalArgumentException("Student is not enrolled in this course");
 		 }
+
+		 if (!mark.isPassed() && !student.canFailMoreCourses()) {
+			 throw new TooManyFailsException("Student cannot fail more than 3 times");
+		 }
+
 		 student.getTranscript().addMark(mark);
 		 course.addMark(mark);
 		 if (!mark.isPassed()) {
@@ -116,8 +123,20 @@ public class Teacher extends Employee implements Researcher {
 		 researcherProfile.printPapers(c);
 	 }
 
-	 //public List<ResearchPaper> getResearchPapers() { return researchPapers; }
-	 //public List<ResearchProject> getResearchProjects() { return researchProjects; }
+	@Override
+	public List<ResearchPaper> getResearchPapers() {
+		return becomeResearcher().getResearchPapers();
+	}
+
+	@Override
+	public List<ResearchProject> getResearchProjects() {
+		return becomeResearcher().getResearchProjects();
+	}
+
+	@Override
+	public String getResearcherName() {
+		return getFullName();
+	}
 
 	 public void addResearchPaper(ResearchPaper paper) {
 		 becomeResearcher().addResearchPaper(paper);

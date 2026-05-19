@@ -5,6 +5,8 @@ import academicBlock.*;
 import Communication.*;
 import System.*;
 
+import java.util.Comparator;
+
 public class Manager extends Employee {
 	 private ManagerType managerType;
 	 private List<Request> visibleRequests = new ArrayList<>();
@@ -21,10 +23,61 @@ public class Manager extends Employee {
 	 public void setManagerType(ManagerType managerType) {
 		 this.managerType = managerType;
 	 }
-	 
-	 public boolean approveRegistration(Student student, Course course) {
-		 return course.addStudent(student);
-	 }
+
+	public boolean approveRegistration(Student student, Course course) {
+		CourseRegistration registration = course.findRegistration(student);
+
+		if (registration == null || registration.getStatus() != RegistrationStatus.PENDING) {
+			return false;
+		}
+
+		boolean enrolled = student.confirmCourseRegistration(course);
+
+		if (enrolled) {
+			registration.approve(this);
+		}
+
+		return enrolled;
+	}
+
+	public boolean rejectRegistration(Student student, Course course) {
+		CourseRegistration registration = course.findRegistration(student);
+
+		if (registration == null || registration.getStatus() != RegistrationStatus.PENDING) {
+			return false;
+		}
+
+		registration.reject(this);
+		return true;
+	}
+
+	public void addVisibleRequest(Request request) {
+		if (request != null && !visibleRequests.contains(request)) {
+			visibleRequests.add(request);
+		}
+	}
+
+	public List<Request> viewRequests() {
+		return visibleRequests;
+	}
+
+	public List<Student> viewStudentsSortedByGPA(List<Student> students) {
+		return students.stream()
+				.sorted(Comparator.comparingDouble(Student::getGpa).reversed())
+				.toList();
+	}
+
+	public List<Student> viewStudentsSortedAlphabetically(List<Student> students) {
+		return students.stream()
+				.sorted(Comparator.comparing(Student::getFullName))
+				.toList();
+	}
+
+	public List<Teacher> viewTeachersSortedAlphabetically(List<Teacher> teachers) {
+		return teachers.stream()
+				.sorted(Comparator.comparing(Teacher::getFullName))
+				.toList();
+	}
 
 	 public void addCourseForRegistration(Course course) { course.openRegistration(); }
 
@@ -33,10 +86,34 @@ public class Manager extends Employee {
 		 teacher.addCourse(course);
 	 }
 
-	 public Report createStatisticsReport() {
-		 return new Report("Academic statistics",
-				 "Simple report about marks and academic performance.");
-	 }
+	public Report createStatisticsReport(List<Course> courses) {
+		int marksCount = 0;
+		int passed = 0;
+		int failed = 0;
+		double total = 0;
+
+		for (Course course : courses) {
+			for (Mark mark : course.getMarks()) {
+				marksCount++;
+				total += mark.getTotal();
+
+				if (mark.isPassed()) {
+					passed++;
+				} else {
+					failed++;
+				}
+			}
+		}
+
+		double average = marksCount == 0 ? 0 : total / marksCount;
+
+		String content = "Marks count: " + marksCount
+				+ ", passed: " + passed
+				+ ", failed: " + failed
+				+ ", average total: " + average;
+
+		return new Report("Academic performance report", content);
+	}
 	 public void addNews(News news, University university) {
 		 university.addNews(news);
 	 }

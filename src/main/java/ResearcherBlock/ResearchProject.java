@@ -18,10 +18,13 @@ public class ResearchProject implements Serializable {
     public List<ResearchPaper> getPublishedPapers() { return publishedPapers; }
 
     public void addParticipant(Object person) throws NotResearcherException {
-        if (!(person instanceof Researcher)) {
-            throw new NotResearcherException("Not a Researcher!");
+        if (!(person instanceof Researcher researcher)) {
+            throw new NotResearcherException("Only researchers can join project");
         }
-        participants.add((Researcher) person);
+
+        if (!participants.contains(researcher)) {
+            participants.add(researcher);
+        }
     }
 
     public void removeParticipant(Researcher r) {

@@ -67,17 +67,40 @@ public class Student extends User implements Researcher {
         this.supervisor = supervisor;
     }
 
-    public boolean registerForCourse(Course course)
-            throws CreditLimitExceededException {
+    public boolean registerForCourse(Course course) throws CreditLimitExceededException {
+        if (!course.isRegistrationOpen()) {
+            throw new CourseRegistrationException("Course registration is closed");
+        }
+
         if (credits + course.getCredits() > 21) {
             throw new CreditLimitExceededException("Student cannot take more than 21 credits");
         }
-        if (course.addStudent(this)) {
+
+        if (enrolledCourses.contains(course)) {
+            return false;
+        }
+
+        course.requestRegistration(this);
+        return true;
+    }
+
+    public boolean confirmCourseRegistration(Course course) throws CreditLimitExceededException {
+        if (credits + course.getCredits() > 21) {
+            throw new CreditLimitExceededException("Student cannot take more than 21 credits");
+        }
+
+        if (!enrolledCourses.contains(course)) {
             enrolledCourses.add(course);
             credits += course.getCredits();
+            course.addStudent(this);
             return true;
         }
+
         return false;
+    }
+
+    public boolean canFailMoreCourses() {
+        return failedCoursesCount < 3;
     }
 
     public boolean dropCourse(Course course) {
@@ -93,6 +116,10 @@ public class Student extends User implements Researcher {
 
     public List<Mark> viewMarks() { return transcript.getMarks(); }
 
+    public List<Teacher> viewTeachersOfCourse(Course course) {
+        return course.getInstructors();
+    }
+
     public void rateTeacher(Teacher teacher, double rating) {
         teacher.receiveRating(rating);
     }
@@ -104,17 +131,46 @@ public class Student extends User implements Researcher {
 
     public void incrementFailedCoursesCount() { failedCoursesCount++; }
 
-    //public int calculateHIndex() {}
-    //public void printPapers(Comparator<ResearchPaper> c) {}
-    //public List<ResearchPaper> getResearchPapers() { return researchPapers; }
-    //public List<ResearchProject> getResearchProjects() { return researchProjects; }
-
-    public void addResearchPaper(ResearchPaper paper) {
-        becomeResearcher().addResearcherPaper(paper);
+    @Override
+    public int calculateHIndex() {
+        if (!isResearcher()) {
+            return 0;
+        }
+        return researcherProfile.calculateHIndex();
     }
 
+    @Override
+    public void printPapers(Comparator<ResearchPaper> comparator) {
+        if (!isResearcher()) {
+            System.out.println(getFullName() + " is not a researcher.");
+            return;
+        }
+        researcherProfile.printPapers(comparator);
+    }
+
+    @Override
+    public List<ResearchPaper> getResearchPapers() {
+        return becomeResearcher().getResearchPapers();
+    }
+
+    @Override
+    public List<ResearchProject> getResearchProjects() {
+        return becomeResearcher().getResearchProjects();
+    }
+
+    @Override
+    public void addResearchPaper(ResearchPaper paper) {
+        becomeResearcher().addResearchPaper(paper);
+    }
+
+    @Override
     public void joinResearchProject(ResearchProject project) {
-        becomeResearcher().joinResearcherProject(project);
+        becomeResearcher().joinResearchProject(project);
+    }
+
+    @Override
+    public String getResearcherName() {
+        return getFullName();
     }
 
     @Override

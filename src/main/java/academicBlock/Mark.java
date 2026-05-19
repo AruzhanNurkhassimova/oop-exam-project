@@ -8,6 +8,10 @@ public class Mark implements Serializable {
 	 private double finalExam;
 	 
 	 public Mark(double firstAttestation, double secondAttestation, double finalExam) {
+		 validateAttestation(firstAttestation);
+		 validateAttestation(secondAttestation);
+		 validateFinal(finalExam);
+
 		 this.firstAttestation = firstAttestation;
 		 this.secondAttestation = secondAttestation;
 		 this.finalExam = finalExam;
@@ -18,24 +22,31 @@ public class Mark implements Serializable {
 	 public double getFinalExam() { return finalExam; }
 
 	 public void setFirstAttestation(double value) {
-		 validate(value);
+		 validateAttestation(value);
 		 this.firstAttestation = value;
 	 }
 	 
 	 public void setSecondAttestation(double value) {
-		 validate(value);
+		 validateAttestation(value);
 		 this.secondAttestation = value;
 	 }
 	 
 	 public void setFinalExam(double value) {
-		 validate(value);
+		 validateFinal(value);
 		 this.finalExam = value;
 	 }
-	 
-	 private void validate(double value) {
-		 if (value < 0) {
-		 throw new IllegalArgumentException("Mark cannot be negative");}
-	 }
+
+	private void validateAttestation(double value) {
+		if (value < 0 || value > 30) {
+			throw new IllegalArgumentException("Attestation must be between 0 and 30");
+		}
+	}
+
+	private void validateFinal(double value) {
+		if (value < 0 || value > 40) {
+			throw new IllegalArgumentException("Final exam must be between 0 and 40");
+		}
+	}
 	 
 	 public double getTotal() {
 	 return firstAttestation + secondAttestation + finalExam;

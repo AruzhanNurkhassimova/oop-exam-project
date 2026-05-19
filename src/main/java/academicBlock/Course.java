@@ -1,6 +1,7 @@
 package academicBlock;
 
 import Enums.CourseType;
+import Enums.RegistrationStatus;
 import Roles.Student;
 import Roles.Teacher;
 
@@ -110,9 +111,24 @@ public class Course implements Serializable {
     }
 
     public CourseRegistration requestRegistration(Student student) {
+        CourseRegistration existing = findRegistration(student);
+
+        if (existing != null && existing.getStatus() == RegistrationStatus.PENDING) {
+            return existing;
+        }
+
         CourseRegistration registration = new CourseRegistration(student, this);
         registrations.add(registration);
         return registration;
+    }
+
+    public CourseRegistration findRegistration(Student student) {
+        for (CourseRegistration registration : registrations) {
+            if (registration.getStudent().equals(student)) {
+                return registration;
+            }
+        }
+        return null;
     }
 
     public boolean addStudent(Student student) {
@@ -159,5 +175,10 @@ public class Course implements Serializable {
         if (this == obj) return true;
         if (!(obj instanceof Course course)) return false;
         return Objects.equals(courseCode, course.courseCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(courseCode);
     }
 }
