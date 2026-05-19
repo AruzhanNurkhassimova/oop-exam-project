@@ -17,49 +17,29 @@ public class Demo {
         Logger logger = new Logger();
 
         Admin admin = factory.createAdmin(1, "admin", "admin123",
-                "System Admin", Language.ENGLISH, 500000, "IT"
-        );
+                "System Admin", Language.ENGLISH, 500000, "IT");
 
         Manager manager = factory.createManager(2, "manager", "manager123", "Academic Manager",
-                Language.ENGLISH, 450000, "Office Registrar", ManagerType.OR
-        );
+                Language.ENGLISH, 450000, "Office Registrar", ManagerType.OR);
 
         Teacher professor = factory.createTeacher(3, "professor", "prof123", "Dr. Alan Smith",
-                Language.ENGLISH, 700000, "Computer Science", TeacherTitle.PROFESSOR, "SITE"
-        );
+                Language.ENGLISH, 700000, "Computer Science", TeacherTitle.PROFESSOR, "SITE");
 
         Teacher tutor = factory.createTeacher(4, "tutor", "tutor123", "Mr. John Brown",
-                Language.ENGLISH, 300000, "Computer Science", TeacherTitle.TUTOR, "SITE"
-        );
+                Language.ENGLISH, 300000, "Computer Science", TeacherTitle.TUTOR, "SITE");
 
         Student student = factory.createStudent(5, "student", "student123", "Aruzhan Student",
-                Language.ENGLISH, "Computer Science", "Mathematics", 2
-        );
+                Language.ENGLISH, "Computer Science", "Mathematics", 2);
 
         GraduateStudent graduateStudent = factory.createGraduateStudent(6, "graduate", "graduate123",
                 "Dias Graduate", Language.ENGLISH, "Computer Science", "Artificial Intelligence",
-                1, DegreeType.MASTER
-        );
+                1, DegreeType.MASTER);
 
-        ResearchEmployee researchEmployee = factory.createResearchEmployee(
-                7,
-                "researcher",
-                "research123",
-                "Lab Researcher",
-                Language.ENGLISH,
-                420000,
-                "Research Lab"
-        );
+        ResearchEmployee researchEmployee = factory.createResearchEmployee(7, "researcher", "research123",
+                "Lab Researcher", Language.ENGLISH, 420000, "Research Lab");
 
-        TechSupportSpecialist techSupport = factory.createTechSupportSpecialist(
-                8,
-                "support",
-                "support123",
-                "IT Support Specialist",
-                Language.ENGLISH,
-                320000,
-                "IT Department"
-        );
+        TechSupportSpecialist techSupport = factory.createTechSupportSpecialist(8, "support", "support123",
+                "IT Support Specialist", Language.ENGLISH, 320000, "IT Department");
 
         admin.addUser(admin, university);
         admin.addUser(manager, university);
@@ -71,11 +51,7 @@ public class Demo {
         admin.addUser(techSupport, university);
 
         try {
-            User loggedIn = authService.authenticate(
-                    "student",
-                    "student123",
-                    university.getUsers()
-            );
+            User loggedIn = authService.authenticate("student", "student123", university.getUsers());
 
             logger.log(loggedIn, "Student authenticated successfully");
             System.out.println("Logged in: " + loggedIn.getFullName());
@@ -83,29 +59,16 @@ public class Demo {
             System.out.println("Authentication failed: " + e.getMessage());
         }
 
-        Course oop = new Course(
-                "CS101",
-                "Object-Oriented Programming",
-                5,
-                CourseType.MAJOR,
-                "SITE",
-                2,
-                "Computer Science"
-        );
+        Course oop = new Course("CS101", "Object-Oriented Programming", 5,
+                CourseType.MAJOR, "SITE", 2, "Computer Science");
 
         university.addCourse(oop);
         manager.addCourseForRegistration(oop);
         manager.assignCourseToTeacher(oop, professor);
         manager.assignCourseToTeacher(oop, tutor);
 
-        Lesson lesson = new Lesson(
-                LessonType.LECTURE,
-                "Interfaces, Inheritance and Polymorphism",
-                new Date(),
-                "Room 101",
-                professor,
-                oop
-        );
+        Lesson lesson = new Lesson(LessonType.LECTURE, "Interfaces, Inheritance and Polymorphism", new Date(),
+                "Room 101", professor, oop);
 
         oop.addLesson(lesson);
 
@@ -129,49 +92,29 @@ public class Demo {
 
         System.out.println("Professor average rating: " + professor.getAverageRating());
 
-        ResearchPaper paper1 = new ResearchPaper(
-                "AI in Education",
-                "University Research Journal",
-                12,
-                new Date(),
-                "10.1000/ai-education"
-        );
+        ResearchPaper paper1 = new ResearchPaper("AI in Education", "University Research Journal",
+                12, new Date(), "10.1000/ai-education");
 
         paper1.setCitations(10);
         paper1.addAuthor(professor.getResearcherProfile());
         professor.addResearchPaper(paper1);
 
-        ResearchPaper paper2 = new ResearchPaper(
-                "Smart Campus Systems",
-                "Engineering Journal",
-                8,
-                new Date(),
-                "10.1000/smart-campus"
-        );
+        ResearchPaper paper2 = new ResearchPaper("Smart Campus Systems", "Engineering Journal",
+                8, new Date(), "10.1000/smart-campus");
 
         paper2.setCitations(4);
         paper2.addAuthor(researchEmployee);
         researchEmployee.addResearchPaper(paper2);
 
-        ResearchPaper paper3 = new ResearchPaper(
-                "Learning Analytics",
-                "Education Technology Journal",
-                9,
-                new Date(),
-                "10.1000/learning-analytics"
-        );
+        ResearchPaper paper3 = new ResearchPaper("Learning Analytics", "Education Technology Journal",
+                9, new Date(), "10.1000/learning-analytics");
 
         paper3.setCitations(6);
         paper3.addAuthor(professor.getResearcherProfile());
         professor.addResearchPaper(paper3);
 
-        ResearchPaper paper4 = new ResearchPaper(
-                "Adaptive Online Courses",
-                "Digital Education Journal",
-                7,
-                new Date(),
-                "10.1000/adaptive-courses"
-        );
+        ResearchPaper paper4 = new ResearchPaper("Adaptive Online Courses", "Digital Education Journal",
+                7, new Date(), "10.1000/adaptive-courses");
 
         paper4.setCitations(5);
         paper4.addAuthor(professor.getResearcherProfile());
@@ -219,11 +162,8 @@ public class Demo {
 
         university.announcePaper(paper1);
 
-        News news = new News(
-                "Research Day",
-                "University research day will be held this Friday.",
-                NewsTopic.RESEARCH
-        );
+        News news = new News("Research Day", "University research day will be held this Friday.",
+                NewsTopic.RESEARCH);
 
         news.addComment(new Comment(student, "Great news!"));
 
@@ -244,25 +184,16 @@ public class Demo {
 
         professor.sendMessage(manager, "Please review my course schedule.");
 
-        professor.sendOfficialMessage(
-                manager,
-                "Exam Room Booking",
-                "Please book Room 101 for the OOP final exam."
-        );
+        professor.sendOfficialMessage(manager, "Exam Room Booking",
+                "Please book Room 101 for the OOP final exam.");
 
         System.out.println("Top cited researcher: " + university.getTopCitedResearcher());
 
-        System.out.println(
-                "Top cited researcher by school SITE: "
-                        + university.getTopCitedResearcherBySchool("SITE")
-        );
+        System.out.println("Top cited researcher by school SITE: " + university.getTopCitedResearcherBySchool("SITE"));
 
         int currentYear = new Date().getYear() + 1900;
 
-        System.out.println(
-                "Top cited researcher of " + currentYear + ": "
-                        + university.getTopCitedResearcherOfYear(currentYear)
-        );
+        System.out.println("Top cited researcher of " + currentYear + ": " + university.getTopCitedResearcherOfYear(currentYear));
 
         Report academicReport = manager.createStatisticsReport(university.getCourses());
 
@@ -277,9 +208,7 @@ public class Demo {
 
         System.out.println("Logs:");
 
-        for (LogRecord log : admin.viewLogs(logger)) {
-            System.out.println(log);
-        }
+        for (LogRecord log : admin.viewLogs(logger)) { System.out.println(log); }
 
         Database database = Database.getInstance();
 
