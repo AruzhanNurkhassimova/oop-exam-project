@@ -1,5 +1,7 @@
 package Roles;
 import java.util.*;
+import ResearcherBlock.*;
+import academicBlock.*;
 
 import academicBlock.*;
 import Communication.*;

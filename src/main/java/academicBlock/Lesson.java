@@ -1,9 +1,12 @@
 package academicBlock;
 
-import java.util.*;
+import Enums.LessonType;
+import Roles.Teacher;
 import java.io.Serializable;
+import java.util.Date;
 
 public class Lesson implements Serializable {
+	 private static final long serialVersionUID = 1L;
 	 private LessonType lessonType;
 	 private String topic;
 	 private Date date;
@@ -20,19 +23,24 @@ public class Lesson implements Serializable {
 		 this.course = course;
 	 }
 	 
-	 public LessonType getLessonType() { return lessonType; }
-	 
+	 public LessonType getLessonType() { return lessonType;}
 	 public String getTopic() { return topic; }
 	 public Date getDate() { return date; }
 	 public String getRoom() { return room; }
 	 public Teacher getInstructor() { return instructor; }
 	 public Course getCourse() { return course; }
+
+	 public void setTopic(String topic) { this.topic = topic; }
+	 public void setDate(Date date) { this.date = date; }
+	 public void setRoom(String room) { this.room = room; }
+	 public void setInstructor(Teacher instructor) { this.instructor = instructor; }
 	 
-	 public void setTopic(String topic) {}
-	 public void setDate(Date date) {}
-	 public void setRoom(String room) {}
-	 public void setInstructor(Teacher instructor) {}
-	 
-	 public String getInfo() {}
+	 public String getInfo() {
+		 return lessonType + ": " + topic + " in " + room + " for " + course.getCourseCode();
+	 }
+	 @Override
+	 public String toString() {
+	 return getInfo();
+	 }
 }
 
