@@ -1,3 +1,5 @@
+package Enums;
+
 public enum UserRole {
     STUDENT,
     GRADUATE_STUDENT,
