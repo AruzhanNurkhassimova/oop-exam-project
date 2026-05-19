@@ -291,7 +291,5 @@ public class Demo {
         System.out.println("Loaded university: " + loadedUniversity);
 
         authService.logout(student);
-
-        System.out.println("Demo finished successfully.");
     }
 }

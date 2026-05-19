@@ -10,6 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Represents an academic course.
+ * A course contains students, instructors, lessons, marks and
+ * course registration requests.
+ *
+ * More than one teacher can be assigned to the same course.
+ */
 public class Course implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -110,6 +117,13 @@ public class Course implements Serializable {
         this.registrationOpen = false;
     }
 
+    /**
+     * Creates a pending course registration request for a student.
+     * If the student already has a pending request, the existing one is returned.
+     *
+     * @param student student who wants to register
+     * @return course registration object
+     */
     public CourseRegistration requestRegistration(Student student) {
         CourseRegistration existing = findRegistration(student);
 
@@ -143,6 +157,11 @@ public class Course implements Serializable {
         return students.remove(student);
     }
 
+    /**
+     * Adds a teacher as an instructor of this course.
+     *
+     * @param teacher teacher assigned to the course
+     */
     public void addInstructor(Teacher teacher) {
         if (!instructors.contains(teacher)) {
             instructors.add(teacher);

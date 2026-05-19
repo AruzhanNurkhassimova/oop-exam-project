@@ -7,6 +7,11 @@ import System.*;
 
 import java.util.Comparator;
 
+/**
+ * Represents a university manager.
+ * Manager approves course registrations, opens courses for registration,
+ * assigns teachers to courses, manages news and creates statistical reports.
+ */
 public class Manager extends Employee {
 	 private ManagerType managerType;
 	 private List<Request> visibleRequests = new ArrayList<>();
@@ -24,6 +29,14 @@ public class Manager extends Employee {
 		 this.managerType = managerType;
 	 }
 
+	/**
+	 * Approves student's pending course registration.
+	 * After approval the student becomes enrolled in the course.
+	 *
+	 * @param student student whose registration is approved
+	 * @param course course selected by the student
+	 * @return true if registration was approved successfully
+	 */
 	public boolean approveRegistration(Student student, Course course) {
 		CourseRegistration registration = course.findRegistration(student);
 
@@ -86,6 +99,12 @@ public class Manager extends Employee {
 		 teacher.addCourse(course);
 	 }
 
+	/**
+	 * Creates a simple academic performance report based on course marks.
+	 *
+	 * @param courses list of courses used for statistics
+	 * @return generated report with passed, failed and average mark statistics
+	 */
 	public Report createStatisticsReport(List<Course> courses) {
 		int marksCount = 0;
 		int passed = 0;

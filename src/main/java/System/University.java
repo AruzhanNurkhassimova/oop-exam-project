@@ -9,7 +9,12 @@ import Enums.*;
  
 import java.io.Serializable;
 import java.util.*;
- 
+
+/**
+ * Main class representing the university system.
+ * Stores users, courses, journals and news.
+ * Provides methods for research statistics and reports.
+ */
 public class University implements Serializable {
     private static final long serialVersionUID = 1L;
  
@@ -82,7 +87,14 @@ public class University implements Serializable {
             news.add(newsItem);
         }
     }
- 
+
+    /**
+     * Collects all researchers from university users.
+     * Researchers can be graduate students, research employees,
+     * teachers with ResearcherProfile or students with ResearcherProfile.
+     *
+     * @return list of all researchers in the university
+     */
     public List<Researcher> getAllResearchers() {
         List<Researcher> researchers = new ArrayList<>();
  
@@ -104,7 +116,12 @@ public class University implements Serializable {
             researcher.printPapers(comparator);
         }
     }
- 
+
+    /**
+     * Finds the researcher with the highest total number of citations.
+     *
+     * @return top cited researcher or null if there are no researchers
+     */
     public Researcher getTopCitedResearcher() {
         return getAllResearchers().stream()
                 .max(Comparator.comparingInt(r -> r.getResearchPapers().stream()

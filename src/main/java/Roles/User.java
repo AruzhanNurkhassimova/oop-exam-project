@@ -6,6 +6,14 @@ import Communication.*;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * Abstract base class for all system users.
+ * Stores common account information such as id, login,
+ * password, full name and interface language.
+ *
+ * User is not created directly. Concrete roles such as
+ * Student, Teacher, Manager and Admin extend this class.
+ */
 public abstract class User implements Serializable {
     private final int id;
     private String login;
@@ -42,10 +50,24 @@ public abstract class User implements Serializable {
         if (language != null) { this.language = language; }
     }
 
+    /**
+     * Checks whether the provided password matches the user's password.
+     * The password itself is not exposed through a getter for security reasons.
+     *
+     * @param rawPassword password entered by user
+     * @return true if password is correct
+     */
     public boolean checkPassword(String rawPassword) {
         return password.equals(rawPassword);
     }
 
+    /**
+     * Changes the user's password if the old password is correct.
+     *
+     * @param oldPassword current password
+     * @param newPassword new password
+     * @return true if password was changed successfully
+     */
     public boolean changePassword(String oldPassword, String newPassword) {
         if (!checkPassword(oldPassword)) return false;
         this.password = newPassword;

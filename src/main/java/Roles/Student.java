@@ -7,6 +7,12 @@ import ResearcherBlock.*;
 
 import java.util.*;
 
+/**
+ * Represents a bachelor student in the university system.
+ * Student can register for courses, view transcript, view marks,
+ * rate teachers and optionally participate in research activities
+ * through ResearcherProfile.
+ */
 public class Student extends User implements Researcher {
     private String major;
     private String minor;
@@ -60,6 +66,13 @@ public class Student extends User implements Researcher {
 
     public void setMinor(String minor) { this.minor = minor; }
 
+    /**
+     * Assigns a research supervisor to the student.
+     * Supervisor must have h-index at least 3.
+     *
+     * @param supervisor researcher assigned as supervisor
+     * @throws LowHIndexException if supervisor h-index is less than 3
+     */
     public void setSupervisor(Researcher supervisor) throws LowHIndexException {
         if (supervisor.calculateHIndex() < 3) {
             throw new LowHIndexException("Supervisor h-index must be at least 3");
@@ -67,6 +80,15 @@ public class Student extends User implements Researcher {
         this.supervisor = supervisor;
     }
 
+    /**
+     * Creates a registration request for the selected course.
+     * The student is not enrolled immediately. Registration must be
+     * approved by a Manager.
+     *
+     * @param course course selected for registration
+     * @return true if registration request was created
+     * @throws CreditLimitExceededException if total credits exceed 21
+     */
     public boolean registerForCourse(Course course) throws CreditLimitExceededException {
         if (!course.isRegistrationOpen()) {
             throw new CourseRegistrationException("Course registration is closed");
@@ -84,6 +106,14 @@ public class Student extends User implements Researcher {
         return true;
     }
 
+    /**
+     * Confirms course registration after manager approval.
+     * Adds course to enrolled courses and updates student credits.
+     *
+     * @param course approved course
+     * @return true if student was successfully enrolled
+     * @throws CreditLimitExceededException if credits exceed the allowed limit
+     */
     public boolean confirmCourseRegistration(Course course) throws CreditLimitExceededException {
         if (credits + course.getCredits() > 21) {
             throw new CreditLimitExceededException("Student cannot take more than 21 credits");

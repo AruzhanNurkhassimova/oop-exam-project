@@ -10,6 +10,13 @@ import Communication.*;
 import Enums.*;
 import ResearcherBlock.*;
 
+/**
+ * Represents a teacher in the university system.
+ * Teacher can manage courses, view students, put marks,
+ * send complaints and optionally become a researcher.
+ *
+ * Professors automatically receive a ResearcherProfile.
+ */
 public class Teacher extends Employee implements Researcher {
 	 private TeacherTitle title;
 	 private String school;
@@ -40,6 +47,12 @@ public class Teacher extends Employee implements Researcher {
 		return researcherProfile != null;
 	}
 
+	/**
+	 * Creates a ResearcherProfile for the teacher if it does not exist.
+	 * Used for professors and other teachers who participate in research.
+	 *
+	 * @return research profile of this teacher
+	 */
 	 public ResearcherProfile becomeResearcher() {
 		 if (researcherProfile == null) {
 			 researcherProfile = new ResearcherProfile(this);
@@ -68,6 +81,15 @@ public class Teacher extends Employee implements Researcher {
 
 	 public List<Student> viewStudents(Course course) { return course.getStudents(); }
 
+	/**
+	 * Puts a mark for a student in a specific course.
+	 * The teacher must be assigned to the course and the student must be enrolled.
+	 *
+	 * @param student student who receives the mark
+	 * @param course course where mark is given
+	 * @param mark mark object containing attestations and final exam
+	 * @throws TooManyFailsException if student has already failed too many times
+	 */
 	 public void putMark(Student student, Course course, Mark mark) {
 		 if (!courses.contains(course)) {
 			 throw new IllegalArgumentException("Teacher is not assigned to this course");

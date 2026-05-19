@@ -3,6 +3,11 @@ import Enums.CitationFormat;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * Represents a research paper.
+ * Stores title, authors, journal name, page count,
+ * publication date, DOI and citation count.
+ */
 public class ResearchPaper implements Serializable, Comparable<ResearchPaper> {
 
     private String title;
@@ -37,6 +42,12 @@ public class ResearchPaper implements Serializable, Comparable<ResearchPaper> {
         return calendar.get(Calendar.YEAR);
     }
 
+    /**
+     * Returns formatted citation for this research paper.
+     *
+     * @param format citation format such as PLAIN_TEXT or BIBTEX
+     * @return formatted citation string
+     */
     public String getCitation(CitationFormat format) {
         if (format == CitationFormat.BIBTEX) {
             return "@article{" + doi +
@@ -72,6 +83,12 @@ public class ResearchPaper implements Serializable, Comparable<ResearchPaper> {
         return title + " (" + journalName + ", citations=" + citations + ", pages=" + pages + ")";
     }
 
+    /**
+     * Compares research papers by citation count.
+     *
+     * @param other another research paper
+     * @return comparison result
+     */
     @Override
     public int compareTo(ResearchPaper other) {
         return Integer.compare(other.citations, this.citations);

@@ -1,6 +1,10 @@
 package academicBlock;
 import java.io.Serializable;
 
+/**
+ * Represents student's mark for a course.
+ * Mark consists of first attestation, second attestation and final exam.
+ */
 public class Mark implements Serializable {
 	 private static final long serialVersionUID = 1L;
 	 private double firstAttestation;
@@ -47,10 +51,22 @@ public class Mark implements Serializable {
 			throw new IllegalArgumentException("Final exam must be between 0 and 40");
 		}
 	}
-	 
+
+	/**
+	 * Calculates total mark from first attestation,
+	 * second attestation and final exam.
+	 *
+	 * @return total mark
+	 */
 	 public double getTotal() {
 	 return firstAttestation + secondAttestation + finalExam;
 	 }
+
+	/**
+	 * Converts numeric total mark into letter grade.
+	 *
+	 * @return letter grade such as A, B, C, D or F
+	 */
 	 public String getLetterGrade() {
 		 double total = getTotal();
 		 if (total >= 95) return "A";
