@@ -5,7 +5,7 @@ import ResearcherBlock.*;
 
 import java.util.*;
 
-public class GraduateStudent extends Student implement Researcher {
+public class GraduateStudent extends Student implements Researcher {
     private DegreeType degreeType;
     private List<ResearchPaper> diplomaProjects = new ArrayList<>();
 

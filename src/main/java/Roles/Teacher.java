@@ -6,7 +6,7 @@ import academicBlock.*;
 import academicBlock.*;
 import Communication.*;
 import Enums.*;
-import Researcher.Block.*;
+import ResearcherBlock.*;
 
 public class Teacher extends Employee implements Researcher {
 	 private TeacherTitle title;
@@ -52,17 +52,17 @@ public class Teacher extends Employee implements Researcher {
 		 }
 	 }
 
-	 public void setSchool(String school) { this.school = school }
+	 public void setSchool(String school) { this.school = school; }
 
 	 public List<Course> viewCourses() {
 		return courses;
 	}
 
 	 public void addCourse(Course course) {
-		 if (course != null && !courses.contaions(course)) { courses.add(course); }
+		 if (course != null && !courses.contains(course)) { courses.add(course); }
 	 }
 
-	 public void removeCourse(Course course) { return courses.remove(course); }
+	 public void removeCourse(Course course) { courses.remove(course); }
 
 	 public List<Student> viewStudents(Course course) { return course.getStudents(); }
 
@@ -70,7 +70,7 @@ public class Teacher extends Employee implements Researcher {
 		 if (!courses.contains(course)) {
 			 throw new IllegalArgumentException("Teacher is not assigned to this course");
 		 }
-		 if (!course.getStudents().contaions(student)) {
+		 if (!course.getStudents().contains(student)) {
 			 throw new IllegalArgumentException("Student is not enrolled in this course");
 		 }
 		 student.getTranscript().addMark(mark);

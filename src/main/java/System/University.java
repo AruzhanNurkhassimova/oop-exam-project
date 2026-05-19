@@ -5,6 +5,7 @@ import Roles.*;
 import academicBlock.*;
 import Communication.*;
 import ResearcherBlock.*;
+import Enums.*;
  
 import java.io.Serializable;
 import java.util.ArrayList;

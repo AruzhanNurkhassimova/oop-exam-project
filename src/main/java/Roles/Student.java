@@ -53,7 +53,7 @@ public class Student extends User implements Researcher {
 
     public ResearcherProfile becomeResearcher() {
         if (researcherProfile == null) {
-            researcherProfile == new ResearcherProfile(this);
+            researcherProfile = new ResearcherProfile(this);
         }
         return researcherProfile;
     }

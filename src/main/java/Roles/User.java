@@ -20,7 +20,7 @@ public abstract class User implements Serializable {
         this.password = password;
         this.fullName = fullName;
         if (language == null) {
-            this.language = Language.EN;
+            this.language = Language.ENGLISH;
         } else {
             this.language = language;
         }
