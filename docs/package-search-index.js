@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"academicBlock"},{"l":"All Packages","u":"allpackages-index.html"},{"l":"Communication"},{"l":"Enums"},{"l":"Exceptions"},{"l":"ResearcherBlock"},{"l":"Roles"},{"l":"System"}];updateSearchResults();
