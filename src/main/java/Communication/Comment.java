@@ -1,3 +1,10 @@
+package Communication;
+
+import Roles.*;
+
+import java.io.Serializable;
+import java.util.*;
+
 public class Comment implements Serializable {
     private User author;
     private String text;

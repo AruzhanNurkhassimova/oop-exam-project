@@ -1,3 +1,10 @@
+package Communication;
+
+import Roles.*;
+
+import java.io.Serializable;
+import java.util.*;
+
 public class Message implements Serializable {
     private Employee sender;
     private Employee receiver;

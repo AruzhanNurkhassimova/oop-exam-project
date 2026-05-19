@@ -1,3 +1,10 @@
+package Communication;
+
+import Roles.*;
+
+import java.io.Serializable;
+import java.util.*;
+
 public class Request implements Serializable {
     private Employee sender;
     private String description;

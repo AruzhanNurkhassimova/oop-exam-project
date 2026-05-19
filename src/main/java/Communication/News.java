@@ -1,4 +1,11 @@
-public class News implement Serializable {
+package Communication;
+
+import Roles.*;
+
+import java.io.Serializable;
+import java.util.*;
+
+public class News implements Serializable {
     private String title;
     private String content;
     private NewsTopic topic;
