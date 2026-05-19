@@ -117,7 +117,7 @@ public class University implements Serializable {
  
     public Researcher getTopCitedResearcherBySchool(String school) {
         return getAllResearchers().stream()
-                .filter(r -> r instanceof edu.university.research.ResearcherProfile profile
+                .filter(r -> r instanceof ResearcherProfile profile
                         && profile.getOwner() instanceof Teacher teacher
                         && teacher.getSchool().equalsIgnoreCase(school))
                 .max(Comparator.comparingInt(r -> r.getResearchPapers().stream()

@@ -13,4 +13,6 @@ public interface Researcher {
 
     void addResearchPaper(ResearchPaper paper);
     void joinResearchProject(ResearchProject project);
+
+    String getResearcherName();
 }
