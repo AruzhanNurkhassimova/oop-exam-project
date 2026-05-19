@@ -1,13 +1,10 @@
-package edu.university.system;
- 
-import edu.university.academic.Course;
-import edu.university.communication.News;
-import edu.university.enums.NewsTopic;
-import edu.university.research.Journal;
-import edu.university.research.ResearchPaper;
-import edu.university.research.Researcher;
-import edu.university.users.Teacher;
-import edu.university.users.User;
+package System;
+
+import Exceptions.*;
+import Roles.*;
+import academicBlock.*;
+import Communication.*;
+import ResearcherBlock.*;
  
 import java.io.Serializable;
 import java.util.ArrayList;

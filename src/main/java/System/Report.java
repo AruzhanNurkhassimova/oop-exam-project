@@ -1,4 +1,4 @@
-package edu.university.system;
+package System;
  
 import java.io.Serializable;
 import java.util.Date;

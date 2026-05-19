@@ -1,8 +1,8 @@
-package edu.university.system;
+package System;
  
-import edu.university.exceptions.AuthenticationException;
-import edu.university.users.User;
- 
+import Exceptions.*;
+import Roles.*;
+
 import java.util.List;
  
 public class AuthService {

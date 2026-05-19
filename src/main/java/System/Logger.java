@@ -1,6 +1,6 @@
-package edu.university.system;
- 
-import edu.university.users.User;
+package System;
+
+import Roles.*;
  
 import java.util.ArrayList;
 import java.util.List;
