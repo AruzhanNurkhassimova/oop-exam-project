@@ -1,13 +1,30 @@
+package Communication;
+import java.io.Serializable;
+import Roles.User;
+import java.util.*;
+
 public class Comment implements Serializable {
-    private User author;
+    private static final long serialVersionUID = 1L;
+    private User author;   
     private String text;
     private Date createdDate;
 
-    public Comment(User author, String text) {}
+    public Comment(User author, String text) {
+        this.author = author;
+        this.text = text;
+        this.createdDate = new Date();
+    }
 
     public User getAuthor() { return author; }
     public String getText() { return text; }
     public Date getCreatedDate() { return createdDate; }
 
-    public void setText(String text) {}
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    @Override
+    public String toString() {
+        return author.getFullName() + ": " + text;
+    }
 }
