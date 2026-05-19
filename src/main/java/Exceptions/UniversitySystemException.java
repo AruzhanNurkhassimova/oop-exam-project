@@ -1,3 +1,5 @@
+package Exceptions;
+
 public class UniversitySystemException extends RuntimeException {
     public UniversitySystemException(String message) {
         super(message);
